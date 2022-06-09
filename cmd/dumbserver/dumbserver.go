@@ -19,6 +19,8 @@ type LogMessage struct {
 func main() {
 	var showBody bool
 	pflag.BoolVar(&showBody, "show-body", false, "Set to true if you want the request bodies to be included in log output")
+	pflag.Parse()
+
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		m := LogMessage{
 			Path:    r.URL.Path,
