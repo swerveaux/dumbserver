@@ -30,8 +30,9 @@ func main() {
 			b, err := io.ReadAll(r.Body)
 			if err != nil {
 				log.Print("{\"error\":\"Unable to read request body.\"}")
+			} else {
+				m.Body = string(b)
 			}
-			m.Body = string(b)
 		}
 		err := json.NewEncoder(log.Writer()).Encode(m)
 		if err != nil {
