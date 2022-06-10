@@ -13,7 +13,7 @@ import (
 type LogMessage struct {
 	Path    string      `json:"path"`
 	Body    string      `json:"body"`
-	Headers http.Header `json:"headers""`
+	Headers http.Header `json:"headers"`
 }
 
 func main() {
