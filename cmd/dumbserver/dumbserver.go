@@ -6,6 +6,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/spf13/pflag"
 )
@@ -17,9 +18,13 @@ type LogMessage struct {
 }
 
 func main() {
-	var showBody bool
-	pflag.BoolVar(&showBody, "show-body", false, "Set to true if you want the request bodies to be included in log output")
+	var showBody, logToStderr bool
+	pflag.BoolVar(&showBody, "show-body", false, "Set if you want the request bodies to be included in log output")
+	pflag.BoolVar(&logToStderr, "log-to-stderr", false, "Set if you want logging to go to stderr. It's usually easier to keep it unset if you want to do something like pipe to jq.")
 	pflag.Parse()
+	if !logToStderr {
+		log.SetOutput(os.Stdout)
+	}
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		m := LogMessage{
