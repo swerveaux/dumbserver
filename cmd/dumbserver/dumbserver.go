@@ -19,8 +19,10 @@ type LogMessage struct {
 
 func main() {
 	var showBody, logToStderr bool
+	port := 8080
 	pflag.BoolVar(&showBody, "show-body", false, "Set if you want the request bodies to be included in log output")
 	pflag.BoolVar(&logToStderr, "log-to-stderr", false, "Set if you want logging to go to stderr. It's usually easier to keep it unset if you want to do something like pipe to jq.")
+	pflag.IntVar(&port, "port", 8080, "Port to listen on")
 	pflag.Parse()
 	if !logToStderr {
 		log.SetOutput(os.Stdout)
@@ -47,5 +49,5 @@ func main() {
 		}
 		fmt.Fprint(w, "OK")
 	})
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", port), nil))
 }
