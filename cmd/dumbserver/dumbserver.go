@@ -47,7 +47,7 @@ func main() {
 			fmt.Fprint(w, "Somehow failed writing logs")
 			return
 		}
-		fmt.Fprint(w, "OK")
+		fmt.Fprint(w, "{\"result\": \"ok\"")
 	})
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", port), nil))
 }
